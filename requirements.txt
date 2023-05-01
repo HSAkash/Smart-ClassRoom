@@ -1,0 +1,26 @@
+face-recognition==1.3.0
+ultralytics==8.0.72
+# TODO: Update with exact module version
+numpy==1.22.4
+torch>=1.7
+opencv-python==4.7.0.72
+loguru==0.7.0
+scikit-image==0.19.3
+tqdm
+torchvision>=0.10.0
+Pillow==8.4.0
+thop==0.1.1.post2209072238
+ninja==1.11.1
+tabulate==0.8.10
+tensorboard==2.12.2
+lap==0.4.0
+motmetrics==1.4.0
+filterpy==1.4.5
+h5py==3.8.0
+
+# verified versions
+onnx==1.13.1
+onnx-simplifier==0.4.26
+onnxruntime==1.14.1
+
+supervision==0.2.0
