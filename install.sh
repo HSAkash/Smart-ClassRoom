@@ -1,5 +1,5 @@
 sudo apt install build-essential
-
+! wget https://raw.githubusercontent.com/ifzhang/ByteTrack/main/README.md
 pip3 install -r requirements.txt
 python3 setup.py  develop
 pip3 install cython
