@@ -132,3 +132,4 @@ src/
 yolox.egg-info/
 .*.csv
 yolov8x.pt
+dataset/video/

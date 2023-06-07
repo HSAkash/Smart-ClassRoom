@@ -1,7 +1,7 @@
 from yolox.tracker.byte_tracker import  STrack
 from onemetric.cv.utils.iou import box_iou_batch
 from dataclasses import dataclass
-import  supervision as sv 
+import  supervision as sv
 from typing import List
 import numpy as np
 
