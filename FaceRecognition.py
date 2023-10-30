@@ -11,29 +11,10 @@ def get_face_locations(all_keypoints):
     Checking face location from keypoints.
     0-5 is face keypoints.
     """
-    all_min_x = all_keypoints[:,:5,0].min(axis=1)
-    all_max_x = all_keypoints[:,:5,0].max(axis=1)
-    all_mid_x = all_keypoints[:,0,0]
-
-    all_min_y = all_keypoints[:,:5,1].min(axis=1)
-    all_max_y = all_keypoints[:,:5,1].max(axis=1)
-    all_mid_y = all_keypoints[:,0,1]
-    distance = np.max(
-        np.absolute(
-            [
-                all_mid_x - all_min_x,
-                all_max_x - all_mid_x,
-                all_mid_y - all_min_y,
-                all_max_y - all_mid_y
-            ]
-        ), axis=0
-    )
-
-    y1 = all_mid_y - distance
-    x2 = all_max_x
-    y2 = all_mid_y + distance
-    x1 = all_min_x
-
+    "___________________Find face location from keypoints______________________"
+    
+    
+    "___________________Find face location from keypoints______________________"
     """
     y1, x2, y2, x1: shape (n,). n is number of person.
     where (y1, x1) is the top-left corner of the face bounding box and (y2, x2) is the bottom-right corner of the face bounding box
@@ -152,17 +133,17 @@ def get_person_ids(
     """
 
     # Allready identified person id
-    Identified_ids = recorder.Identified_ids
+
     # Check trackId is in Identified_ids
-    isin_trackId = np.isin(trackId, Identified_ids, invert=True)
+
     # Check person detection confident. If confident > .4, then True.
-    is_boxes = boxes_conf > .4
+
     """
     if trackId is not in Identified_ids and 
     that person face confident > .9 and person detection confident > .4 
     then we should identify that person.
     """
-    is_face_check = isin_trackId & face_available & is_boxes
+    is_face_check = []
 
     embeddings = []
 
@@ -171,38 +152,15 @@ def get_person_ids(
     Those who are not in Identified_ids and are not face confident > .9 and person detection confident > .4
     Embedding those faces.
     """
-    check_location = []
-    for i in range(trackId.shape[0]):
-        if is_face_check[i]:
-            check_location.append(face_locations[i])
-    check_location = np.array(check_location)
-    embeddings = face_recognition.face_encodings(frame, check_location)
-    """_________________________________________"""
-    embeddings = np.array(embeddings)
+
 
     # get person id from face embedding varifications
-    if embeddings.shape[0] > 0:
-        ids = face_verification(known_face_embedding, embeddings, known_face_ids,
-                            threshold=threshold, distance_type='linalg')
+
 
 
     """___________________Labelling______________________"""
     lables = []
-    j = 0
-    for i in range(face_locations.shape[0]):
-        try:
-            # Those who already identified get their id from track recoder Identified_ids_link_person_ids
-            if not isin_trackId[i]:
-                lables.append(recorder.Identified_ids_link_person_ids[trackId[i]])
-            # Identify new person
-            elif is_face_check[i]:
-                lables.append(ids[j])
-                j+=1
-            # New person but not identified
-            else:
-                lables.append(None)
-        except Exception as e:
-            raise Exception(f"{e}")
+
     
 
 
@@ -210,24 +168,7 @@ def get_person_ids(
     """
     if duplicate person id found, then remove old person id from Identified_ids.
     """
-    np_labels = np.array(lables)
-    valid_indices = np.where(np_labels != None)[0]
-    filtered_lables = np_labels[valid_indices]
-    if len(filtered_lables)>0:
-        if np.unique(filtered_lables, return_counts=True)[1].max() > 1:
-            labels_dict = {}
-            for i in range(face_locations.shape[0]):
-                if lables[i]:
-                    if lables[i] not in labels_dict:
-                        labels_dict[lables[i]] = []
-                    labels_dict[lables[i]].append(trackId[i])
-            labels_dict = {k: sorted(v) for k, v in labels_dict.items()}
-            for k, v in labels_dict.items():
-                for duplicate_id in v[:-1]:
-                    if duplicate_id in recorder.Identified_ids:
-                        recorder.Identified_ids.remove(duplicate_id)
-                        indices = np.where(trackId == duplicate_id)[0][0]
-                        lables[indices]=None
+
 
     """___________________duplicate value check____________________"""
 

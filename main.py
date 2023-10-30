@@ -96,19 +96,8 @@ with sv.VideoSink(TARGET_VIDEO_PATH, video_info) as writer:
             boxes = results.boxes.xyxy.cpu().numpy()[mask==True]
             boxes_conf = results.boxes.conf.cpu().numpy()[mask==True]
             all_keypoints = results.keypoints.cpu().numpy()[mask==True]
-            face_locations = get_face_locations(boxes, all_keypoints)
-            face_available = is_face_available(all_keypoints)
             
-
-
-            ids = get_person_ids(
-                frame,face_locations, face_available,
-                boxes_conf, known_face_embedding, known_face_ids,
-                detections.tracker_id, recorder, 
-                threshold=0.4, distance_type='linalg'
-            )
-            records = get_records(detections, ids, all_keypoints)
-            recorder.update_track(records)
+            """___________________________Face Recognition_______________________________"""
             
             
             "____________________Draw____________________"
@@ -133,11 +122,7 @@ with sv.VideoSink(TARGET_VIDEO_PATH, video_info) as writer:
 
 
             "___________________Start Take Attendance______________________"
-            # attendace_count += 1
-            # for label in ids:
-            #     if label:
-            #         if label not in attendace_dict.keys():
-            #             attendace_dict[label] = attendace_count
+
             
             "___________________End Take Attendance________________________"
 

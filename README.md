@@ -1,3 +1,11 @@
+# SmartClassRoom
+## Features
+* Automatic attendance
+* Student Activity detection
+* Student Activity Tracking
+
+[](/assets/smartClassroom.mp4)
+
 ## Installation
 
 ### Conda
