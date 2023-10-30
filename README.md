@@ -4,7 +4,8 @@
 * Student Activity detection
 * Student Activity Tracking
 
-[](/assets/smartClassroom.mp4)
+[](https://github.com/HSAkash/Smart-ClassRoom/assets/44114317/0967c772-0b5f-4e95-a268-7403c77962cf)
+
 
 ## Installation
 
